@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>首页</title>
+    <script src="./js/lib.js"></script>
     <style>
         :root {
             /* 后期可以自定义主题，所以开头定义好 */
@@ -121,8 +122,10 @@
 </body>
 
 <script>
-    //侧边栏需要加载的内容，后期动态显示，采用动态的方式，这里的值来源与数据库
-
+    //检查登录状态
+    if(!checkLoginToken()){
+        window.location.href = "login.html";
+    }
 
     function loadBegin() {
         //开始加载左侧侧边栏
