@@ -9,11 +9,11 @@ $type = $_POST['type'];
 
 if(checkParm($username) || checkParm($password) || checkParm($type)){
     if(login($username, $password, $conn, $type)){
-        
+        $token = createToken($username, $password);
         $arr = array(
             "code" => 200,
             "msg" => "登录成功",
-            "token" => ""
+            "token" => $token
         );
     }else{
         $arr = array(
