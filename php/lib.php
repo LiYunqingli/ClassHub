@@ -40,6 +40,16 @@ function login($userid, $password, $conn, $type)
     }
 }
 
+//检查token是否有效，传入token返回解析后的内容
+function checkLoginToken($token, $conn, $type)
+{
+    if (($data = parseToken($token)) != null) {
+        $data = json_decode($data, true);
+        if (login($data['username'], $data['password'], $conn, $type)) {
+        }
+    }
+}
+
 //创建token，传入用户名以及密码，返回token
 function createToken($username, $password)
 {
@@ -65,6 +75,7 @@ function parseToken($token)
 
     if ($decrypted === false) {
         return null; // 解密失败
+        //后期需要写入日志文件
     }
 
     list($username, $password, $time) = explode('[$$$]', $decrypted);
