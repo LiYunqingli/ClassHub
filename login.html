@@ -5,95 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login | 登录</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            height: 100%;
-        }
-
-        body {
-            height: 100%;
-        }
-
-        .container {
-            height: 100%;
-            background-size: cover;
-            background-image: url(./img/bg-image.jpg);
-        }
-
-        .login-wrapper {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            width: 358px;
-            height: 588px;
-            border-radius: 15px;
-            padding: 0 50px;
-            position: relative;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .header {
-            font-size: 38px;
-            font-weight: bold;
-            text-align: center;
-            line-height: 200px;
-            color: #fff;
-        }
-
-        .input-item {
-            display: block;
-            width: 100%;
-            margin-bottom: 20px;
-            border: 0;
-            padding: 10px;
-            border-bottom: 1px solid rgb(128, 125, 125);
-            font-size: 15px;
-            outline: none;
-            border-radius: 1vh;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #000;
-        }
-
-        .input-item:placeholder {
-            text-transform: uppercase;
-            color: #909090;
-            opacity: 1;
-        }
-
-        .btn {
-            text-align: center;
-            padding: 10px;
-            width: 100%;
-            margin-top: 40px;
-            background-color: #6874a9;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-image 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #272e49;
-        }
-
-        .msg {
-            text-align: center;
-            line-height: 88px;
-        }
-
-        a {
-            text-decoration-line: none;
-            color: #abc1ee;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/login.css">
+    <script src="./js/lib.js"></script>
 </head>
 
 <body>
@@ -112,5 +25,29 @@
         </div>
     </div>
 </body>
+
+<script>
+
+    function login(){
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
+        if(username != "" && password != ""){
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", $HOST + "/login.php", true);
+            xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    let res = JSON.parse(xhr.responseText);
+                    if(res.code == 200){
+                        alert("登录成功");
+                    }else{
+                        alert(res.msg);
+                    }
+                }
+            }
+            xhr.send();
+        }
+    }
+</script>
 
 </html>
