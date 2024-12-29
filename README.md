@@ -2,9 +2,9 @@
 
 > ClassHub，一个面向计算机专业的插件式多班级管家
 
-[![GitHub stars](https://img.shields.io/github/stars/用户名/仓库名?style=social)](https://github.com/用户名/仓库名/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/用户名/仓库名?style=social)](https://github.com/用户名/仓库名/network)
-[![License](https://img.shields.io/github/license/用户名/仓库名)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/LiYunqingli/ClassHub?style=social)](https://github.com/LiYunqingli/ClassHub/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/LiYunqingli/ClassHub?style=social)](https://github.com/LiYunqingli/ClassHub/network)
+[![License](https://img.shields.io/github/license/LiYunqingli/ClassHub)](LICENSE)
 
 ---
 
