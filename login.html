@@ -40,7 +40,9 @@
                 if(xhr.readyState == 4 && xhr.status == 200){
                     let res = JSON.parse(xhr.responseText);
                     if(res.code == 200){
-                        alert("登录成功");
+                        console.log(res.token);
+                        localStorage.setItem("token", res.token);
+                        window.location.href = "./index.html"
                     }else{
                         alert(res.msg);
                     }
