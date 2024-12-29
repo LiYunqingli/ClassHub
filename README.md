@@ -2,9 +2,9 @@
 
 > 项目的简要描述或口号，例如：“一个优雅的代码工具集”，“快速构建现代网页的框架”，等。
 
-[![GitHub stars]]
-[![GitHub forks](https://github.com/LiYunqingli/ClassHub?style=social)](https://github.com/LiYunqingli/ClassHub/network)
-[![License](https://github.com/LiYunqingli/ClassHub)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/用户名/仓库名?style=social)](https://github.com/用户名/仓库名/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/用户名/仓库名?style=social)](https://github.com/用户名/仓库名/network)
+[![License](https://img.shields.io/github/license/用户名/仓库名)](LICENSE)
 
 ---
 
