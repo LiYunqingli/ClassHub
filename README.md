@@ -1,6 +1,6 @@
 # 项目名称
 
-> 项目的简要描述或口号，例如：“一个优雅的代码工具集”，“快速构建现代网页的框架”，等。
+> ClassHub，一个面向计算机专业的插件式多班级管家
 
 [![GitHub stars](https://img.shields.io/github/stars/用户名/仓库名?style=social)](https://github.com/用户名/仓库名/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/用户名/仓库名?style=social)](https://github.com/用户名/仓库名/network)
