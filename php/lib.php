@@ -39,3 +39,11 @@ function login($userid, $password, $conn, $type)
         return false;
     }
 }
+
+//生成token
+function getToken($userid, $password, $type)
+{
+    //读取json文件config.json
+    $config = json_decode(file_get_contents("./config.json"), true);
+    $key = $config["TokenPublicKey"];
+}

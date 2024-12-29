@@ -1,0 +1,10 @@
+{
+    "TokenPublicKey" : "Lihuarong5887",
+    "MySqlConnect" : {
+        "host" : "localhost",
+        "username" : "root",
+        "password" : "Lihuarong5887",
+        "database" : "ClassHub",
+        "port" : 3306
+    }
+}

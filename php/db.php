@@ -2,12 +2,19 @@
 
 //连接数据库，请注意修改为当前数据库的数据库信息
 
-$username = "root";
-$password = "Lihuarong5887";
-$host = "localhost";
-$dbname = "ClassHub";
+//读取json文件config.json
+$config = json_decode(file_get_contents("./config.json"), true);
 
-$conn = new mysqli($host, $username, $password, $dbname);
+$config = $config['MySqlConnect'];
+$host = $config['host'];
+$username = $config['username'];
+$password = $config['password'];
+$database = $config['database'];
+$port = $config['port'];
+
+// $conn = new mysqli($host, $username, $password, $database);
+$conn = new mysqli($host, $username, $password, $database, $port);
+
 
 if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);

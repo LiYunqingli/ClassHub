@@ -7,8 +7,6 @@ $username = $_POST['userid'];
 $password = $_POST['password'];
 $type = $_POST['type'];
 
-
-
 if(checkParm($username) || checkParm($password) || checkParm($type)){
     if(login($username, $password, $conn, $type)){
         
