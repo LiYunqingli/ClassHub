@@ -40,10 +40,40 @@ function login($userid, $password, $conn, $type)
     }
 }
 
-//生成token
-function getToken($userid, $password, $type)
+//创建token，传入用户名以及密码，返回token
+function createToken($username, $password)
 {
-    //读取json文件config.json
     $config = json_decode(file_get_contents("./config.json"), true);
     $key = $config["TokenPublicKey"];
+    $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+    $time = strtotime('+1 day');
+    $data = $username . '[$$$]' . $password . '[$$$]' . $time;
+    $encrypted = openssl_encrypt($data, 'aes-256-cbc', $key, 0, $iv);
+    return base64_encode($iv . $encrypted);
+}
+
+//解析token，传入token，返回用户名以及密码和时间
+function parseToken($token)
+{
+    $config = json_decode(file_get_contents("./config.json"), true);
+    $key = $config["TokenPublicKey"];
+    $data = base64_decode($token);
+    $iv_length = openssl_cipher_iv_length('aes-256-cbc');
+    $iv = substr($data, 0, $iv_length);
+    $encrypted = substr($data, $iv_length);
+    $decrypted = openssl_decrypt($encrypted, 'aes-256-cbc', $key, 0, $iv);
+
+    if ($decrypted === false) {
+        return null; // 解密失败
+    }
+
+    list($username, $password, $time) = explode('[$$$]', $decrypted);
+
+    // 返回解析结果
+    $data = array(
+        'username' => $username,
+        'password' => $password,
+        'time' => $time
+    );
+    return json_encode($data);
 }
