@@ -9,13 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>首页</title>
     <script src="./js/lib.js"></script>
+    <link rel="stylesheet" href="./css/--root.css">
     <style>
-        :root {
-            /* 后期可以自定义主题，所以开头定义好 */
-            --background-color: rgba(0, 0, 0, 0.1);
-            --font-color: #fff;
-        }
-
         body {
             margin: 0;
             padding: 0;
@@ -114,10 +109,8 @@
                     </div>
                 </div> -->
             </div>
-
-
         </div>
-        <iframe src="http://43.139.71.160:8080/website" frameborder="0" class="right"></iframe>
+        <iframe src="http://43.139.71.160:8080/website" frameborder="0" class="right" id="iframe"></iframe>
     </div>
 </body>
 
@@ -132,12 +125,12 @@
         const lists = {//假设直接获取到数据，后期接入api
             0: {
                 'name': '主页',
-                'url': '跳转到主页',
+                'url': './page',
                 'icon': './img/首页.png'
             },
             1: {
                 'name': '德育分',
-                'url': '跳转到德育分',
+                'url': 'http://43.139.71.160:8080/website',
                 'icon': 'http://43.139.71.160:8080/class_app/website/img/%E5%BE%B7%E8%82%B2%E5%88%86.png'
             }
         };
@@ -147,7 +140,7 @@
             let li = document.createElement('li');
             console.log(list.name);
             shuchu += `
-                <div class="btn" id="${i}" onclick="alert('${list.url}')">
+                <div class="btn" id="${i}" onclick="document.getElementById('iframe').src = '${list.url}'">
                     <div class="a">
                         <img src="${list.icon}">
                         <div class="txt">
