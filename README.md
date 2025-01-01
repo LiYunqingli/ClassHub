@@ -59,23 +59,30 @@
 1. 克隆该仓库：
 
     ```bash
-    git clone https://github.com/用户名/仓库名.git
+    git clone https://github.com/LiYunqingli/ClassHub.git
     ```
 
-2. 安装依赖：
+2. 修改参数：
 
     ```bash
-    cd 仓库名
-    npm install
+    cd [clone的目录]/ClassHub/js
+    //修改目录下的lib.js第九行为php服务器地址（api地址）
+    cd [clone的目录]/ClassHub/php
+    //修改目录下的config.json文件，将对应字段按照实际修改
+    cd [clone的目录]/ClassHub/SQL
+    //将目录下的server.sql导入到MySQL数据库中
     ```
 
 3. 启动项目：
 
-    ```bash
-    npm start
-    ```
+    - 启动Nginx或Apache服务器，并将项目目录指向到克隆的目录
+    - 启动MySQL服务器，并且开放本地访问权限，若修改了端口，则修改php目录下的config.json文件，请注意需要保证php能够正确的连接数据库
+    - 启动php服务器，并确保php服务器地址与lib.js中的一致
+    - 打开浏览器，访问项目地址（127.0.0.1:80/~），即可开始使用
 
----
+4. 推荐
+
+    - 推荐使用服务器管理面板来快速部署项目，例如1panel和宝塔面板或者小皮面板
 
 ## 💡 使用方法
 
