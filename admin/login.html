@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | 登录</title>
+    <link rel="stylesheet" href="./css/login.css">
+    <script src="./js/lib.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="login-wrapper">
+            <div class="header">Login</div>
+            <div class="form-wrapper">
+                <input id="username" type="text" name="username" placeholder="用户id" class="input-item" />
+                <input id="password" type="password" name="password" placeholder="用户密码" class="input-item" />
+                <div class="btn" onclick="login()">登录</div>
+            </div>
+            <div class="msg">
+                忘记密码?
+                <a href="./gpwd.html">找回密码</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    const LOGIN_TYPE = "user";
+
+    function login(){
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
+        if(username != "" && password != ""){
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", $HOST + "/login.php", true);
+            xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    let res = JSON.parse(xhr.responseText);
+                    if(res.code == 200){
+                        console.log(res.token);
+                        localStorage.setItem("admin_token", res.token);
+                        window.location.href = "./index.html"
+                    }else{
+                        alert(res.msg);
+                    }
+                }
+            }
+            xhr.send(`userid=${username}&password=${password}&type=${LOGIN_TYPE}`);
+        }
+    }
+</script>
+
+</html>

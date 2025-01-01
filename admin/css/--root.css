@@ -1,0 +1,6 @@
+:root {
+    --background-color: rgba(0, 0, 0, 0.05);/*整体（body）的背景颜色*/
+    --font-color-dark: #fff;
+    --font-color-light: #000;/*这两个字体颜色后面的单词指的是当背景是datk或者light*/
+    --kapian-background-color: #fff;/*卡片的背景颜色*/
+}

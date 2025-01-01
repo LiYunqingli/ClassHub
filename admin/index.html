@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- by Mr. Li Huarong -->
+<!-- 2024.12.27 -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClassHub</title>
+    <script src="./js/lib.js"></script>
+    <link rel="stylesheet" href="./css/--root.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .left {
+            width: 90px;
+            background-color: #2d32a8;
+            height: 100vh;
+            border-radius: 0 7px 7px 0;
+            user-select: none;
+            transition: width 0.3s ease;
+        }
+
+        .left:hover {
+            width: 180px
+        }
+
+        .left .logo img {
+            width: 63px;
+            margin-left: 13.5px;
+            margin-top: 18px;
+            border-radius: 6px;
+        }
+
+        .left .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .left #btns{
+            margin-top: 100px;
+        }
+
+
+        .left .btn .a {
+            display: flex;
+            align-items: center;
+        }
+
+        .left .btn {
+            display: flex;
+            margin-top: 40px;
+        }
+
+        .left .btn:hover{
+            transform: scale(1.05);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .left .btn .txt{
+            color: var(--font-color-dark);
+            font-size: 16px;
+            width: 100px;
+            margin-left: 10px;
+            display: none;
+        }
+
+        .left .title {
+            color: var(--font-color-dark);
+            font-size: 20px;
+            margin-left: 30px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .left .btn img {
+            width: 25px;
+            height: 25px;
+            margin-left: 30px;
+        }
+
+        .right {
+            width: calc(100% - 90px);
+            height: 100vh;
+            background-color: var(--background-color);
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="display: flex;">
+        <div class="left" onmouseover="showAndHide(true)" onmouseout="showAndHide(false)">
+            <div class="logo">
+                <img src="./img/logo.png">
+                <div class="title">is</div>
+            </div>
+            <div id="btns">
+
+                <!-- <div class="btn" onclick="">
+                    <img src="">
+                    <div class="txt">
+                        主页
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <iframe src="./page" frameborder="0" class="right" id="iframe"></iframe>
+    </div>
+</body>
+
+<script>
+    //检查登录状态
+    if(!checkLoginToken()){
+        window.location.href = "login.html";
+    }
+
+    function loadBegin() {
+        //开始加载左侧侧边栏
+        const lists = {//假设直接获取到数据，后期接入api
+            0: {
+                'name': '主页',
+                'url': './page',
+                'icon': './img/首页.png'
+            },
+            1: {
+                'name': '德育分',
+                'url': './page/dyf.html',
+                'icon': './img/德育分.png'
+            },
+            2: {
+                'name': '应用',
+                'url': './page/softwares.html',
+                'icon': './img/应用.png'
+            }
+        };
+        let shuchu = "";
+        for (let i in lists) {
+            let list = lists[i];
+            let li = document.createElement('li');
+            console.log(list.name);
+            shuchu += `
+                <div class="btn" id="${i}" onclick="document.getElementById('iframe').src = '${list.url}'">
+                    <div class="a">
+                        <img src="${list.icon}">
+                        <div class="txt">
+                            ${list.name}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        document.getElementById("btns").innerHTML = shuchu;
+    }
+    loadBegin();
+
+    function showAndHide(isVisible) {
+        const title = document.querySelector('.left .title');
+        const buttons = document.querySelectorAll('.btn .txt');
+        title.style.display = isVisible ? 'block' : 'none';
+        buttons.forEach(button => {
+            button.style.display = isVisible ? 'block' : 'none';
+        });
+    }
+</script>
+
+</html>
