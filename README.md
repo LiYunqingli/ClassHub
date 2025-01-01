@@ -49,8 +49,10 @@
 
 在开始安装之前，请确保您的系统已安装以下软件：
 
-- [PHP]() (v14 或更高版本)
-- [MySql]() (v6 或更高版本)
+- [PHP](https://www.php.net/) (v7.1 或更高版本)
+- [MySql](https://www.mysql.com/) (v5.7 或更高版本)
+- [Nginx](http://nginx.org/) (v1.15 或更高版本)
+- [Apache](https://httpd.apache.org/) (可选以替换Nginx作为Web服务器)
 
 ### 安装步骤
 
