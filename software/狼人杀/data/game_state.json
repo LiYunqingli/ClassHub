@@ -1,0 +1,6 @@
+{
+    "phase": "night_start",
+    "roles": ["wolf", "wolf", "wolf", "seer", "witch", "hunter", "villager", "villager", "villager"],
+    "message": "天黑了，请闭眼。"
+  }
+  
