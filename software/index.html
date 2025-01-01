@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>221-9的考勤</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f5fb;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        /* 主容器 */
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        /* 左侧工具区 */
+        .tools {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .tools label {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .tools input, .tools textarea, .tools button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+        .tools input:hover, .tools textarea:hover, .tools button:hover {
+            border-color: #000000;
+        }
+        .tools textarea {
+            resize: none;
+        }
+        .tools button {
+            background: #000000;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .tools button:hover {
+            background: #000000;
+        }
+
+        /* 右侧结果区 */
+        .results {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            flex: 1;
+        }
+        .card h2 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            color: #444;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 5px;
+        }
+        .card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .card ul li {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .card ul li:hover {
+            background: #000000;
+            color: #fff;
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .card ul li {
+            animation: fadeIn 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <h1>减轻考班的工作的算法考勤</h1>
+    <div class="container">
+        <div class="tools">
+            <div>
+                <label for="classListFile">上传班级名单：</label>
+                <input type="file" id="classListFile" accept=".txt">
+            </div>
+            <div>
+                <label for="attendanceInput">输入已签到人员名单：</label>
+                <textarea id="attendanceInput" rows="5" placeholder="格式如：1.张三坐车"></textarea>
+            </div>
+            <button id="checkAttendance">开始考勤</button>
+        </div>
+
+        <div class="results">
+            <div class="card">
+                <h2>未签到人员</h2>
+                <ul id="absentList">
+                    <li>无</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h2>无效输入</h2>
+                <ul id="invalidList">
+                    <li>无</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let classList = [];
+        document.getElementById('classListFile').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (!file) {
+                alert('请选择一个班级名单文件！');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function () {
+                classList = reader.result.split('\n').map(name => name.trim()).filter(Boolean);
+                alert('班级名单已加载，共 ' + classList.length + ' 人。');
+            };
+            reader.readAsText(file);
+        });
+        document.getElementById('checkAttendance').addEventListener('click', function () {
+            const attendanceText = document.getElementById('attendanceInput').value.trim();
+            if (!attendanceText) {
+                alert('请输入已签到人员名单！');
+                return;
+            }
+
+            if (classList.length === 0) {
+                alert('请先上传班级名单！');
+                return;
+            }
+
+            const parsedAttendanceList = parseAttendanceInput(attendanceText);
+            const validAttendanceList = [];
+            const invalidList = [];
+
+            // 检查有效性
+            parsedAttendanceList.forEach(name => {
+                if (classList.includes(name)) {
+                    validAttendanceList.push(name);
+                } else {
+                    invalidList.push(name);
+                }
+            });
+
+            const absentList = classList.filter(name => !validAttendanceList.includes(name));
+
+            displayList('absentList', absentList);
+
+            displayList('invalidList', invalidList);
+        });
+        function parseAttendanceInput(input) {
+            return input
+                .split(/\n|,/) // 按换行或逗号分隔
+                .map(line => line.replace(/^\d+[\.\,，]?\s*/, '').trim()) // 去掉编号
+                .map(line => line.replace(/[^一-龥]+$/, '').trim()) // 提取中文姓名
+                .filter(Boolean); // 去除空白行
+        }
+
+        function displayList(elementId, items) {
+            const list = document.getElementById(elementId);
+            list.innerHTML = '';
+            if (items.length === 0) {
+                list.innerHTML = '<li>无</li>';
+            } else {
+                items.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    list.appendChild(li);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
