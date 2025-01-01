@@ -1,11 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>德育分-普通用户</title>
+    <title>德育分详情</title>
+    <script src="../js/chart.js"></script>
+    <style>
+        /* 基础样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        h1,
+        h2 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        /* 顶部标题 */
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #2d32a8;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #2d32a8;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* 总分与记录数 */
+        .summary {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .summary-item {
+            text-align: center;
+            background-color: #f9f9ff;
+            border: 1px solid #2d32a8;
+            border-radius: 8px;
+            padding: 15px;
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .summary-title {
+            font-size: 16px;
+            color: #2d32a8;
+        }
+
+        .summary-value {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        /* 折线图样式 */
+        .chart-container {
+            margin: 20px 0;
+        }
+
+        .chart-container canvas {
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        /* 表格样式 */
+        .score-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .score-table th,
+        .score-table td {
+            text-align: left;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .score-table th {
+            background-color: #2d32a8;
+            color: white;
+            font-weight: bold;
+        }
+
+        .score-table td {
+            font-size: 14px;
+        }
+
+        .score-table tr:hover {
+            background-color: #f9f9ff;
+        }
+
+        /* 居中无数据提示 */
+        .no-data {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>德育分-普通用户</h1>
+    <div class="container">
+        <!-- 顶部信息 -->
+        <header class="header">
+            <h1>德育分详情</h1>
+            <p>欢迎，Yunqingli！以下是你的德育分变化记录</p>
+        </header>
+
+        <!-- 总分与记录数 -->
+        <section class="summary">
+            <div class="summary-item">
+                <p class="summary-title">总分</p>
+                <p class="summary-value" id="total-score">--</p>
+            </div>
+            <div class="summary-item">
+                <p class="summary-title">记录数</p>
+                <p class="summary-value" id="record-count">--</p>
+            </div>
+        </section>
+
+        <!-- 折线图 -->
+        <section class="chart-container">
+            <h2>分数变化趋势图</h2>
+            <canvas id="scoreChart"></canvas>
+        </section>
+
+        <!-- 分数变化表格 -->
+        <section class="score-list">
+            <h2>分数变化表</h2>
+            <table class="score-table" id="score-table">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>详情</th>
+                        <th>分数</th>
+                        <th>日期</th>
+                    </tr>
+                </thead>
+                <tbody id="score-table-body">
+                    <!-- 动态插入表格数据 -->
+                </tbody>
+            </table>
+            <p class="no-data" id="no-data">暂无数据</p>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 模拟单个学生的分数记录
+            const studentScores = [
+                { id: 1, detail: "班级表现优秀", score: 1, date: "2025-01-01" },
+                { id: 2, detail: "协助班级活动", score: 5, date: "2025-01-02" },
+                { id: 3, detail: "作业完成度高", score: -3, date: "2025-01-03" },
+                { id: 4, detail: "文明行为", score: 8, date: "2025-01-04" },
+                { id: 4, detail: "文明行为", score: 8, date: "2025-01-05" },
+                { id: 4, detail: "文明行为", score: 8, date: "2025-01-06" },
+                { id: 4, detail: "文明行为", score: 8, date: "2025-01-07" },
+                { id: 4, detail: "文明行为", score: 8, date: "2025-01-08" },
+            ];
+
+            // 总分和记录数计算
+            const totalScore = studentScores.reduce((sum, record) => sum + record.score, 0);
+            document.getElementById("total-score").textContent = totalScore;
+            document.getElementById("record-count").textContent = studentScores.length;
+
+            // 渲染表格
+            const tableBody = document.getElementById("score-table-body");
+            const noData = document.getElementById("no-data");
+
+            if (studentScores.length > 0) {
+                noData.style.display = "none";
+                studentScores.forEach((record, index) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${record.detail}</td>
+            <td style="color: #2d32a8; font-weight: bold;">+${record.score}</td>
+            <td>${record.date}</td>
+          `;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                noData.style.display = "block";
+            }
+
+            // 渲染折线图
+            const ctx = document.getElementById("scoreChart").getContext("2d");
+            const labels = studentScores.map(record => record.date);
+            const data = studentScores.map(record => record.score);
+
+            new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: "分数变化趋势",
+                        data: data,
+                        borderColor: "#2d32a8",
+                        backgroundColor: "rgba(45, 50, 168, 0.2)",
+                        tension: 0.2,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: "top",
+                            labels: {
+                                color: "#333"
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: "#333" },
+                            grid: { color: "#eee" }
+                        },
+                        y: {
+                            ticks: { color: "#333" },
+                            grid: { color: "#eee" }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>
