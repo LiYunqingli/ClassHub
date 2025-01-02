@@ -14,11 +14,16 @@ const $HOST = "http://127.0.0.1/php";
 
 //检查登录状态以及验证token的是否有效
 function checkLoginToken() {
-    let token = localStorage.getItem("token");
+    let token = getToken();
     if (token == null) {
         return false;
     }else{
         console.log("token: " + token);
         return true;
     }
+}
+
+
+function getToken() {
+    return localStorage.getItem("token");
 }

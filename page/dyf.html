@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>德育分详情</title>
     <script src="../js/chart.js"></script>
+    <!-- 连接库文件 -->
+    <script src="../js/lib.js"></script>
     <style>
         /* 基础样式 */
         body {
@@ -168,12 +170,30 @@
             <p class="no-data" id="no-data">暂无数据</p>
         </section>
     </div>
+    <script>
+        let token = getToken();
+        if (!token) {
+            top.location.reload();//整个标签页刷新而不是单单iframe
+            window.location.href = "login.html";//避免非iframe的访问
+        }
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", $HOST + "/getDeyufenDetails.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let response = JSON.parse(xhr.responseText);
+                console.log(response);
+            }
+        }
+        xhr.send("token=" + token);
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             // 模拟单个学生的分数记录
             const studentScores = [
-                { id: 1, detail: "班级表现优秀", score: 1, totalScore:10, date: "2025-01-01" },
+                { id: 1, detail: "班级表现优秀", score: 1, totalScore: 10, date: "2025-01-01" },
                 { id: 2, detail: "协助班级活动", score: 5, date: "2025-01-02" },
                 { id: 3, detail: "作业完成度高", score: -3, date: "2025-01-03" },
                 { id: 4, detail: "文明行为", score: 8, date: "2025-01-04" },
