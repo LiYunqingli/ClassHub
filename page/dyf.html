@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>德育分详情</title>
-    <script src="../js/chart.js"></script>
-    <!-- 连接库文件 -->
     <script src="../js/lib.js"></script>
+    <script src="../js/chart.js"></script>
+
     <style>
         /* 基础样式 */
         body {
@@ -123,6 +123,7 @@
             color: #666;
         }
     </style>
+
 </head>
 
 <body>
@@ -171,104 +172,104 @@
         </section>
     </div>
     <script>
-        let token = getToken();
-        if (!token) {
-            top.location.reload();//整个标签页刷新而不是单单iframe
-            window.location.href = "login.html";//避免非iframe的访问
-        }
 
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", $HOST + "/getDeyufenDetails.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                let response = JSON.parse(xhr.responseText);
-                console.log(response);
-            }
-        }
-        xhr.send("token=" + token);
     </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // 模拟单个学生的分数记录
-            const studentScores = [
-                { id: 1, detail: "班级表现优秀", score: 1, totalScore: 10, date: "2025-01-01" },
-                { id: 2, detail: "协助班级活动", score: 5, date: "2025-01-02" },
-                { id: 3, detail: "作业完成度高", score: -3, date: "2025-01-03" },
-                { id: 4, detail: "文明行为", score: 8, date: "2025-01-04" },
-                { id: 4, detail: "文明行为", score: -4, date: "2025-01-05" },
-                { id: 4, detail: "文明行为", score: 3, date: "2025-01-06" },
-                { id: 4, detail: "文明行为", score: 3, date: "2025-01-07" },
-                { id: 4, detail: "文明行为", score: 2, date: "2025-01-08" },
-            ];
-
-            // 总分和记录数计算
-            const totalScore = studentScores.reduce((sum, record) => sum + record.score, 0) + 80;
-            document.getElementById("total-score").textContent = totalScore;
-            document.getElementById("record-count").textContent = studentScores.length;
-
-            // 渲染表格
-            const tableBody = document.getElementById("score-table-body");
-            const noData = document.getElementById("no-data");
-
-            if (studentScores.length > 0) {
-                noData.style.display = "none";
-                studentScores.forEach((record, index) => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${record.detail}</td>
-            <td style="color: #2d32a8; font-weight: bold;">+${record.score}</td>
-            <td>${record.date}</td>
-          `;
-                    tableBody.appendChild(row);
-                });
-            } else {
-                noData.style.display = "block";
+            let token = getToken();
+            if (!token) {
+                top.location.reload();//整个标签页刷新而不是单单iframe
+                window.location.href = "login.html";//避免非iframe的访问
             }
 
-            // 渲染折线图
-            const ctx = document.getElementById("scoreChart").getContext("2d");
-            const labels = studentScores.map(record => record.date);
-            const data = studentScores.map(record => record.score);
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", $HOST + "/getDeyufenDetails.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let response = JSON.parse(xhr.responseText);
+                    if (response.code == 200) {
+                        console.log("请求成功，token有效");
+                        const studentScores = response.data;
 
-            new Chart(ctx, {
-                type: "line",
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: "分数变化趋势",
-                        data: data,
-                        borderColor: "#2d32a8",
-                        backgroundColor: "rgba(45, 50, 168, 0.2)",
-                        tension: 0.2,
-                        fill: true,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: "top",
-                            labels: {
-                                color: "#333"
+                        // 总分和记录数计算
+                        const totalScore = studentScores.reduce((sum, record) => sum + Number(record.score), 0) + 80;
+                        document.getElementById("total-score").textContent = totalScore;
+                        document.getElementById("record-count").textContent = studentScores.length;
+
+                        // 渲染表格
+                        const tableBody = document.getElementById("score-table-body");
+                        const noData = document.getElementById("no-data");
+
+                        if (studentScores.length > 0) {
+                            noData.style.display = "none";
+                            studentScores.forEach((record, index) => {
+                                const row = document.createElement("tr");
+                                let score_type = "";
+                                if (record.score > 0) {
+                                    score_type = "+";
+                                }
+                                row.innerHTML = `
+                                    <td>${index + 1}</td>
+                                    <td>${record.detail}</td>
+                                    <td style="color: #2d32a8; font-weight: bold;">${score_type}${record.score}</td>
+                                    <td>${record.time}</td>
+                                  `;
+                                tableBody.appendChild(row);
+                            });
+                        } else {
+                            noData.style.display = "block";
+                        }
+
+                        // 渲染折线图
+                        const ctx = document.getElementById("scoreChart").getContext("2d");
+                        const labels = studentScores.map(record => record.time);
+                        const data = studentScores.map(record => record.totalScore);
+
+                        new Chart(ctx, {
+                            type: "line",
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: "分数变化趋势",
+                                    data: data,
+                                    borderColor: "#2d32a8",
+                                    backgroundColor: "rgba(45, 50, 168, 0.2)",
+                                    tension: 0.2,
+                                    fill: true,
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: "top",
+                                        labels: {
+                                            color: "#333"
+                                        }
+                                    }
+                                },
+                                scales: {
+                                    x: {
+                                        ticks: { color: "#333" },
+                                        grid: { color: "#eee" }
+                                    },
+                                    y: {
+                                        ticks: { color: "#333" },
+                                        grid: { color: "#eee" }
+                                    }
+                                }
                             }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            ticks: { color: "#333" },
-                            grid: { color: "#eee" }
-                        },
-                        y: {
-                            ticks: { color: "#333" },
-                            grid: { color: "#eee" }
-                        }
+                        });
+                    } else if (response.code == 401) {//token过期或者非法，强制退出登录，刷新页面
+                        loginOut();
                     }
                 }
-            });
+            }
+            xhr.send("token=" + token);
+
         });
     </script>
 </body>

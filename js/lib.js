@@ -17,7 +17,7 @@ function checkLoginToken() {
     let token = getToken();
     if (token == null) {
         return false;
-    }else{
+    } else {
         console.log("token: " + token);
         return true;
     }
@@ -26,4 +26,11 @@ function checkLoginToken() {
 
 function getToken() {
     return localStorage.getItem("token");
+}
+
+
+function loginOut() {
+
+    localStorage.removeItem("token");
+    top.location.reload();
 }
