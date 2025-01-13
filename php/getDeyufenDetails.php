@@ -20,7 +20,8 @@ if(isset($token)){
         }
         //如果data不为空，则给每一条数据加上一个字段totalScore，计算每一条数组往上的总分
         if(!empty($data)){
-            $totalScore = 0;
+            $defineScore = getServerConfig()['DeYuFen']['defineScore'];
+            $totalScore = $defineScore;
             for ($i = 0; $i < count($data); $i++){
                 $now = $data[$i];
                 $score = $now['score'];

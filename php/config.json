@@ -7,5 +7,8 @@
         "password": "Lihuarong5887",
         "database": "ClassHub",
         "port": 3306
+    },
+    "DeYuFen": {
+        "defineScore": 80
     }
 }

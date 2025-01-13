@@ -193,8 +193,8 @@
                         console.log("请求成功，token有效");
                         const studentScores = response.data;
 
-                        // 总分和记录数计算
-                        const totalScore = studentScores.reduce((sum, record) => sum + Number(record.score), 0) + 80;
+                        //最后一条数据的总分则是总成绩
+                        let totalScore = studentScores[studentScores.length -1].totalScore;
                         document.getElementById("total-score").textContent = totalScore;
                         document.getElementById("record-count").textContent = studentScores.length;
 
