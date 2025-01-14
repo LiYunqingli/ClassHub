@@ -4,6 +4,7 @@
 define('IN_INDEX', true);
 
 include 'db.php';
+
 include 'lib.php';
 
 $token = $_POST['token'];
