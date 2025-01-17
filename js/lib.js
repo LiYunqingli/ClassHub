@@ -12,7 +12,7 @@ const $HOST = "http://127.0.0.1/php";
 // ----------------------------------
 
 
-//检查登录状态以及验证token的是否有效
+//检查登录状态以及验证token的是否存在
 function checkLoginToken() {
     let token = getToken();
     if (token == null) {
@@ -21,6 +21,30 @@ function checkLoginToken() {
         console.log("token: " + token);
         return true;
     }
+}
+
+//检查token是否合法，如果合法则log，否则执行loginOut
+function checkLoginTokenIsTrue() {
+    let token = getToken();
+    if (!token) {
+        top.location.reload();//整个标签页刷新而不是单单iframe
+        window.location.href = $HOST + "/../login.html";//避免非iframe的访问
+    }
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", $HOST + "/checkToken.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let response = JSON.parse(xhr.responseText);
+            if (response.code == 200) {
+                console.log("token is true");
+            }else{
+                loginOut();
+            }
+        }
+    }
+    xhr.send("token=" + token);
 }
 
 
@@ -34,3 +58,4 @@ function loginOut() {
     localStorage.removeItem("token");
     top.location.reload();
 }
+

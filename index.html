@@ -41,7 +41,7 @@
             align-items: center;
         }
 
-        .left #btns{
+        .left #btns {
             margin-top: 100px;
         }
 
@@ -56,13 +56,13 @@
             margin-top: 40px;
         }
 
-        .left .btn:hover{
+        .left .btn:hover {
             transform: scale(1.05);
             cursor: pointer;
             transition: transform 0.3s ease;
         }
 
-        .left .btn .txt{
+        .left .btn .txt {
             color: var(--font-color-dark);
             font-size: 16px;
             width: 100px;
@@ -115,9 +115,12 @@
 </body>
 
 <script>
-    //检查登录状态
-    if(!checkLoginToken()){
+    //本地检查登录状态
+    if (!checkLoginToken()) {
         window.location.href = "login.html";
+    } else {
+        //服务器检查登录状态
+        checkLoginTokenIsTrue();
     }
 
     function loadBegin() {

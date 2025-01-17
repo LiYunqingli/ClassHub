@@ -5,7 +5,7 @@ define('IN_INDEX', true);
 include 'db.php';
 include 'lib.php';
 
-$token = $_GET['token'];
+$token = $_POST['token'];
 
 if (isset($token)){
     if(checkToken($token, $conn)){
