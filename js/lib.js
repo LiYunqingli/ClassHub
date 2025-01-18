@@ -47,15 +47,19 @@ function checkLoginTokenIsTrue() {
     xhr.send("token=" + token);
 }
 
-
+//获取token，全局
 function getToken() {
     return localStorage.getItem("token");
 }
 
-
+//退出登录
 function loginOut() {
 
     localStorage.removeItem("token");
     top.location.reload();
 }
 
+function openSoftWare(appID){
+    let token = getToken();
+
+}

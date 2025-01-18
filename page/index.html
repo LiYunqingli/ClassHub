@@ -1,153 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ClassHub是一个面向计算机职业教育的班级管理工具，提供插件市场和开发工具，供学生自主开发插件。">
+    <meta name="author" content="ClassHub团队">
+    <title>ClassHub - 面向计算机职业教育的班级工具</title>
     <style>
         body {
-            background-color: rgba(0, 0, 0, 0.05);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+            color: #333;
         }
-
-        .first {
-            padding-left: 5vh;
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-
-        .first h1 {
-            font-size: 4vh;
+        header h1 {
+            font-size: 2em;
+            margin: 0;
         }
-
-        .first p {
-            font-size: 2vh;
-            font-weight: 600;
+        header p {
+            font-size: 1.2em;
+            margin: 0;
         }
-
-        table {
-            margin: 5% 0 0 10%;
-            padding: 10px;
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 40px;
+            padding: 50px;
+            box-sizing: border-box;
         }
-
-        .first_right {
-            width: 30vh;
-            height: 20vh;
-            border-radius: 2vh;
-            border: 0.1vh solid #000;
+        .section {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .index_left {
-            width: 60vh;
-            border-radius: 2vh;
-            border: 0.1vh solid #000;
-            height: 30vh;
-            transition: all 1s ease;
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
-
-        .index_right {
-            width: 30vh;
-            height: 50vh;
-            border: 0.1vh solid #000;
-            border-radius: 2vh;
-            max-width: 100%;
-            max-height: 100%;
-            overflow: hidden;
+        .section h2 {
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            color: #34495e;
+            text-align: center;
         }
-
-        .row2,
-        .row3 {
-            height: 25vh;
+        .section p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #555;
+            text-indent: 2em; /* 设置首行缩进 */
         }
-
-        td {
-            padding-left: 8vh;
+        .section ul {
+            list-style: none;
+            padding: 0;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #555;
+            text-indent: 2em; /* 设置首行缩进 */
         }
-
-        .row1 td {
-            padding-bottom: 5vh;
+        .section ul li {
+            margin-bottom: 12px;
         }
-
-        .after_p {
-            text-indent: 4vh;
-            font-size: 1.8vh;
-            font-weight: 540;
+        .button {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            color: white;
+            background-color: #3498db;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        footer {
+            background-color: #34495e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 1em;
         }
     </style>
 </head>
-
 <body>
-    <table width="100%">
-        <tr class="row1">
-            <td style="width: 45%">
-                <div class="first">
-                    <h1>首页</h1>
-                    <p id="tit_p">Hi, xxx, 别来无恙啊！</p>
-                </div>
-            </td>
-            <td>
-                <div class="first_right">
-                    <p style="text-align: center; line-height: 2.2vh; margin-top: 2vh" id="tip">
 
-                    </p>
-                </div>
-            </td>
-        </tr>
-        <tr class="row2">
-            <td>
-                <div class="index_left"></div>
-            </td>
-            <td rowspan="2">
-                <div class="index_right">
-                    <img src="http://43.139.71.160:8080/class_app/website/img/a4.jpg" alt="" width="100%" />
-                    <p style="
-                font-size: 2vh;
-                font-weight: bold;
-                margin: 0;
-                text-align: center;
-              ">
-                        同学们课间的样子
-                    </p>
-                </div>
-            </td>
-        </tr>
-        <tr class="row3">
-            <td>
-                <h3></h3>
-                <p class="after_p">
-                    “一名优秀的程序员，在穿越单行道时也会确认双向的来车情况。”——道格拉斯·林德（Doug
-                    Linder）
-                    <br />
-                    <br />
-                    “诶，为什么这个功能在测试环境运行正常，到了生产环境就出问题了？”--云清璃（Yunqingli
-                    YQL）
-                </p>
-            </td>
-            <td></td>
-        </tr>
-    </table>
+<header>
+    <h1>ClassHub</h1>
+    <p>面向计算机职业教育的班级工具与插件市场</p>
+</header>
+
+<div class="main-content">
+    <div class="section">
+        <h2>关于ClassHub</h2>
+        <p>ClassHub是一个面向计算机职业教育的班级管家，旨在提升班级管理效率，并为学生提供一个项目开发平台。我们的目标是通过简单而强大的插件市场，帮助学生将创意变成现实，同时提高他们的编程技能。</p>
+    </div>
+
+    <div class="section">
+        <h2>项目特色</h2>
+        <p>ClassHub不仅仅是一个班级管理工具，它还为学生提供了丰富的功能，包括：</p>
+        <!-- <ul>
+            <li>班级日程管理</li>
+            <li>作业和任务分配</li>
+            <li>课程讨论区与沟通平台</li>
+            <li>插件市场：学生可以自由开发插件并上架</li>
+            <li>灵活的插件开发工具和文档支持</li>
+        </ul> -->
+            <span>班级日程管理</span><br>
+            <span>作业和任务分配</span><br>
+            <span>课程讨论区与沟通平台</span><br>
+            <span>插件市场：学生可以自由开发插件并上架</span><br>
+            <span>灵活的插件开发工具和文档支持</span><br>
+    </div>
+
+    <div class="section">
+        <h2>插件市场</h2>
+        <p>ClassHub为学生提供了一个开放的插件市场，允许每位学生根据需求自由开发插件，上传并与他人共享。这是一个展示编程技能和创新思维的好机会。</p>
+        <br>
+        <a href="#market" class="button">浏览插件市场</a>
+    </div>
+
+    <div class="section">
+        <h2>联系我们</h2>
+        <p>如果您有任何问题或建议，欢迎随时联系我。</p>
+        <br>
+        <span>项目地址：github.com/LiYunqingli/ClassHub</span>
+        <br>
+        <br>
+        <br>
+        <a href="mailto:support@classhub.com" class="button">联系我们</a>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 ClassHub. All rights reserved.  by  Mr.LiHuarong </p>
+</footer>
+
 </body>
-<script>
-    // 设定网站开始运行的日期时间
-    const startDate = new Date("2024-12-30T00:00:00Z");
-
-    function updateCountdown() {
-        const currentDate = new Date();
-        const timeDiff = currentDate.getTime() - startDate.getTime();
-
-        const seconds = Math.floor(timeDiff / 1000);
-        const minutes = Math.floor(seconds / 60);
-        const hours = Math.floor(minutes / 60);
-        const days = Math.floor(hours / 24);
-
-        const remainingSeconds = seconds % 60;
-        const remainingMinutes = minutes % 60;
-        const remainingHours = hours % 24;
-        var text = "共上传24次代码到主分支<br>代码行数：3129<br><a href='https://yunqingli.lanzoul.com/iIbCO1oxlulg'>源码下载</a>";
-        document.getElementById('tip').innerHTML = `<br>本站已经运行了 ${days} 天 ${remainingHours} 小时 ${remainingMinutes} 分钟 ${remainingSeconds} 秒<br><br>${text}`;
-        // console.log(`本站已经运行了 ${days} 天 ${remainingHours} 小时 ${remainingMinutes} 分钟 ${remainingSeconds} 秒`);
-    }
-
-    // 每秒更新一次倒计时
-    setInterval(updateCountdown, 1000);
-</script>
-
 </html>
