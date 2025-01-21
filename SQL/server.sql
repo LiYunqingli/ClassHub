@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2024-12-31 11:15:59
+-- 生成日期： 2025-01-21 15:52:07
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.4
 
@@ -67,7 +67,7 @@ CREATE TABLE `lists` (
   `typeid` int(11) NOT NULL COMMENT '数据类型(考勤还是纪律...)id',
   `score` int(11) NOT NULL COMMENT '分数变化',
   `detail` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '记录的内容',
-  `insert_time` datetime NOT NULL COMMENT '插入数据库的时间',
+  `insert_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `time` datetime NOT NULL COMMENT '记录内容的发生时间',
   `adminid` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '管理员id',
   `classid` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '班级id'
@@ -96,6 +96,22 @@ CREATE TABLE `roles` (
   `role` int(11) NOT NULL COMMENT '记录数字1-4，4的权限等级最高',
   `role_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '名字：root:root , admin:admin , admin:user , user:user',
   `role_data` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '权限说明（解释）'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `softwares`
+--
+
+CREATE TABLE `softwares` (
+  `id` int(11) NOT NULL COMMENT '软件id',
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '软件名字',
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '公共的还是特定用户私有的',
+  `accessID` int(11) NOT NULL COMMENT '允许访问的用户id列表，引用到另外一个表，表记录的值格式：[user:2210909] / [admin:root]',
+  `y_n` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '是否启用软件',
+  `classid` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '班级id',
+  `appID` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'app上架的授权码（每个app都不一样-自动生成）'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -184,6 +200,16 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`userid`),
   ADD KEY `classid` (`classid`),
   ADD KEY `role` (`role`);
+
+--
+-- 在导出的表使用AUTO_INCREMENT
+--
+
+--
+-- 使用表AUTO_INCREMENT `lists`
+--
+ALTER TABLE `lists`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
