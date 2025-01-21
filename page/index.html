@@ -8,93 +8,90 @@
     <title>ClassHub - 面向计算机职业教育的班级工具</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f7fc;
+            background-color: #f5f7fa;
             color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* 确保页面最小高度为视口高度 */
         }
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #2c3e50;
+            padding: 20px 30px;
+            background-color: #34495e;
             color: white;
-            padding: 30px 40px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         header h1 {
-            font-size: 2em;
-            margin: 0;
+            font-size: 2rem;
         }
-        header p {
-            font-size: 1.2em;
-            margin: 0;
+        header nav {
+            display: flex;
+            gap: 20px;
+        }
+        header nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+        header nav a:hover {
+            color: #1abc9c;
         }
         .main-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 40px;
-            padding: 50px;
-            box-sizing: border-box;
+            flex: 1; /* 主内容区域填满剩余空间 */
+            padding: 50px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
         }
-        .section {
+        .card {
             background-color: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            text-align: left;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: calc(33% - 40px);
+            min-width: 280px;
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-        .section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
-        .section h2 {
-            font-size: 1.6em;
-            margin-bottom: 20px;
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
             color: #34495e;
-            text-align: center;
         }
-        .section p {
-            font-size: 1.1em;
-            line-height: 1.6;
-            margin-bottom: 20px;
+        .card p {
+            font-size: 1rem;
+            margin-bottom: 15px;
             color: #555;
-            text-indent: 2em; /* 设置首行缩进 */
         }
-        .section ul {
-            list-style: none;
-            padding: 0;
-            font-size: 1.1em;
-            margin-bottom: 20px;
-            color: #555;
-            text-indent: 2em; /* 设置首行缩进 */
-        }
-        .section ul li {
-            margin-bottom: 12px;
-        }
-        .button {
-            padding: 15px 30px;
-            font-size: 1.1em;
+        .card a {
+            display: inline-block;
+            padding: 10px 20px;
             color: white;
-            background-color: #3498db;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
+            background-color: #1abc9c;
+            border-radius: 6px;
             text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 1rem;
+            transition: background-color 0.3s;
         }
-        .button:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
+        .card a:hover {
+            background-color: #16a085;
         }
         footer {
             background-color: #34495e;
             color: white;
             text-align: center;
-            padding: 20px;
-            font-size: 1em;
+            padding: 15px;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -102,53 +99,40 @@
 
 <header>
     <h1>ClassHub</h1>
-    <p>面向计算机职业教育的班级工具与插件市场</p>
+    <nav>
+        <a href="#about">关于</a>
+        <a href="#features">特色</a>
+        <a href="#market">插件市场</a>
+        <a href="#contact">联系我</a>
+    </nav>
 </header>
 
 <div class="main-content">
-    <div class="section">
+    <div class="card" id="about">
         <h2>关于ClassHub</h2>
-        <p>ClassHub是一个面向计算机职业教育的班级管家，旨在提升班级管理效率，并为学生提供一个项目开发平台。我们的目标是通过简单而强大的插件市场，帮助学生将创意变成现实，同时提高他们的编程技能。</p>
+        <p>ClassHub是一个专为计算机职业教育设计的班级管理工具，帮助学生提升技能，同时通过插件市场激发创造力。</p>
     </div>
 
-    <div class="section">
+    <div class="card" id="features">
         <h2>项目特色</h2>
-        <p>ClassHub不仅仅是一个班级管理工具，它还为学生提供了丰富的功能，包括：</p>
-        <!-- <ul>
-            <li>班级日程管理</li>
-            <li>作业和任务分配</li>
-            <li>课程讨论区与沟通平台</li>
-            <li>插件市场：学生可以自由开发插件并上架</li>
-            <li>灵活的插件开发工具和文档支持</li>
-        </ul> -->
-            <span>班级日程管理</span><br>
-            <span>作业和任务分配</span><br>
-            <span>课程讨论区与沟通平台</span><br>
-            <span>插件市场：学生可以自由开发插件并上架</span><br>
-            <span>灵活的插件开发工具和文档支持</span><br>
+        <p>从日程管理到插件开发，ClassHub提供了多种功能，包括任务分配、讨论区、以及开放的插件市场。</p>
     </div>
 
-    <div class="section">
+    <div class="card" id="market">
         <h2>插件市场</h2>
-        <p>ClassHub为学生提供了一个开放的插件市场，允许每位学生根据需求自由开发插件，上传并与他人共享。这是一个展示编程技能和创新思维的好机会。</p>
-        <br>
-        <a href="#market" class="button">浏览插件市场</a>
+        <p>在这里，学生可以上传、共享或下载其他人的插件，体验编程的乐趣和成果。</p>
+        <a href="#market">浏览插件市场</a>
     </div>
 
-    <div class="section">
+    <div class="card" id="contact">
         <h2>联系我们</h2>
-        <p>如果您有任何问题或建议，欢迎随时联系我。</p>
-        <br>
-        <span>项目地址：github.com/LiYunqingli/ClassHub</span>
-        <br>
-        <br>
-        <br>
-        <a href="mailto:support@classhub.com" class="button">联系我们</a>
+        <p>有任何问题或建议？欢迎通过邮箱与我们联系！</p>
+        <a href="mailto:support@classhub.com">联系我们</a>
     </div>
 </div>
 
 <footer>
-    <p>&copy; 2025 ClassHub. All rights reserved.  by  Mr.LiHuarong </p>
+    <p>&copy; 2025 ClassHub. All rights reserved. by Mr.LiHuarong</p>
 </footer>
 
 </body>
