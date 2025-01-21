@@ -1,4 +1,6 @@
 <?php
+//引入公共函数库
+include 'publicLib.php';
 
 //此脚本用于存放一些常用的函数，请注意注释，后期写文档好整理
 
@@ -40,10 +42,6 @@ function login($userid, $password, $conn, $type)
     }
 }
 
-//获取服务器配置
-function getServerConfig(){
-    return json_decode(file_get_contents("./config.json"), true);
-}
 
 //检查token是否有效，传入token返回解析后的内容
 function checkLoginToken($token, $conn, $type)
