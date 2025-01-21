@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>示例</title>
+    <!-- 公共库 -->
+    <script src="http://127.0.0.1/js/lib.js"></script>
+    <!-- 专为插件设计的函数库 -->
+    <script src="./js/lib.js"></script>
+
+    <script>
+        //初始化
+        checkLoginForApp();//检查登录状态，如果失败直接跳转登录
+    </script>
+
+    <style>
+        #insert div{
+            width: 100px;
+            background-color: #000;
+            margin: 10px;
+            padding: 10px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="insert" style="display: flex;flex-wrap: wrap;">
+        <!-- <div>这是第一条数据</div> -->
+    </div>
+
+</body>
+<script>
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "../php/getList.php", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            let res = JSON.parse(xhr.responseText);
+            if (res.code == 200) {
+                let data = res.data;
+                let insert = "";
+                for (let i = 0; i < data.length; i++) {
+                    insert += `
+                        <div>${data[i]}</div>
+                    `;
+                }
+                document.getElementById("insert").innerHTML = insert;
+            } else {
+                alert(res.msg);
+            }
+        }
+    }
+    xhr.send();
+</script>
+</html>

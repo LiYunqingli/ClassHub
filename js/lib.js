@@ -7,6 +7,7 @@
 
 /* 主机地址 */
 const $HOST = "http://127.0.0.1/php";
+const $HOST_HOME = "http://127.0.0.1/login.html"//登录页
 /* 请注意开发的时候修改为开发地址，部署服务使应当修改为服务器地址 */
 
 // ----------------------------------
@@ -28,7 +29,7 @@ function checkLoginTokenIsTrue() {
     let token = getToken();
     if (!token) {
         top.location.reload();//整个标签页刷新而不是单单iframe
-        window.location.href = $HOST + "/../login.html";//避免非iframe的访问
+        window.location.href = $HOST_HOME;//避免非iframe的访问
     }
 
     let xhr = new XMLHttpRequest();
@@ -57,9 +58,4 @@ function loginOut() {
 
     localStorage.removeItem("token");
     top.location.reload();
-}
-
-function openSoftWare(appID){
-    let token = getToken();
-
 }
