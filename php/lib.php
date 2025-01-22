@@ -1,6 +1,5 @@
 <?php
 //引入公共函数库
-include 'publicLib.php';
 
 //此脚本用于存放一些常用的函数，请注意注释，后期写文档好整理
 
@@ -9,6 +8,15 @@ include 'publicLib.php';
 if (!defined('IN_INDEX')) {
     exit('拒绝访问');
 }
+
+//定义公共函数库的路径(difined的原因是有其他目录下引用文件将导致相对路径混乱，这里直接由开发者判断路径)
+$publicLib = "publicLib.php";
+if(defined('ROOT_PATH')){
+    $publicLib = ROOT_PATH . $publicLib;
+}
+
+include $publicLib;
+
 
 //检查传入的参数是否为空或者有效
 function checkParm($str)
