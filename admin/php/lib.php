@@ -50,6 +50,29 @@ function checkLoginToken($token, $conn, $type)
     }
 }
 
+//检查token是否合法
+function checkToken($token, $conn){
+    $user_token_data = json_decode(parseToken($token), true);
+    $userid = $user_token_data['username'];
+    $password = $user_token_data['password'];
+    $time = $user_token_data['time'];
+
+    $config = getServerConfig();
+    $TokenExpireTime = $config["TokenExpireTime"];//单位是day
+    // if (time() - $time > 3600) {
+    if (time() - $time > $TokenExpireTime * 24 * 3600) { //token过期时间
+        return false;
+    }else{
+        $sql = "SELECT * FROM admins WHERE adminid = '$userid' AND password = '$password'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 //创建token，传入用户名以及密码，返回token
 function createToken($username, $password)
 {

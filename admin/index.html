@@ -41,7 +41,7 @@
             align-items: center;
         }
 
-        .left #btns{
+        .left #btns {
             margin-top: 100px;
         }
 
@@ -56,13 +56,13 @@
             margin-top: 40px;
         }
 
-        .left .btn:hover{
+        .left .btn:hover {
             transform: scale(1.05);
             cursor: pointer;
             transition: transform 0.3s ease;
         }
 
-        .left .btn .txt{
+        .left .btn .txt {
             color: var(--font-color-dark);
             font-size: 16px;
             width: 100px;
@@ -97,7 +97,7 @@
     <div style="display: flex;">
         <div class="left" onmouseover="showAndHide(true)" onmouseout="showAndHide(false)">
             <div class="logo">
-                <img src="./img/logo.png">
+                <img src="./img/logo.png" id="loginOut">
                 <div class="title">is</div>
             </div>
             <div id="btns">
@@ -110,14 +110,17 @@
                 </div> -->
             </div>
         </div>
-        <iframe src="./page" frameborder="0" class="right" id="iframe"></iframe>
+        <iframe src="../page" frameborder="0" class="right" id="iframe"></iframe>
     </div>
 </body>
 
 <script>
-    //检查登录状态
-    if(!checkLoginToken()){
-        window.location.href = "login.html";
+    //本地检查登录状态
+    if (!checkLoginToken()) {
+        window.location.href = $HOST_HOME;
+    } else {
+        //服务器检查登录状态
+        checkLoginTokenIsTrue();
     }
 
     function loadBegin() {
@@ -125,7 +128,7 @@
         const lists = {//假设直接获取到数据，后期接入api
             0: {
                 'name': '主页',
-                'url': './page',
+                'url': '../page/',
                 'icon': './img/首页.png'
             },
             1: {
@@ -167,6 +170,13 @@
             button.style.display = isVisible ? 'block' : 'none';
         });
     }
+
+    //双击头像退出登录
+    document.getElementById('loginOut').addEventListener('dblclick', function () {
+        //删除监听器(原因：如果不删除，跳转到登录页面再重新登录的时候，这个监听器还在工作，会重复执行)，即：登录成功跳转到index.html立即执行loginOut()退出登录
+        document.getElementById('loginOut').removeEventListener('dblclick', arguments.callee);
+        loginOut();
+    });
 </script>
 
 </html>

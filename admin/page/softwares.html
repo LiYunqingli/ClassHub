@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>已安装的应用</title>
-    <link rel="stylesheet" href="../css/--root.css">
     <style>
         /* 全局样式 */
         * {
@@ -15,9 +14,8 @@
         }
 
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            /* background: linear-gradient(to bottom, #a2d9ff, #fef6ff); */
-            background-color: var(--background-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0eaff, #f5f7ff);
             color: #333;
             display: flex;
             justify-content: center;
@@ -29,9 +27,10 @@
         .container {
             width: 90%;
             max-width: 1200px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             padding: 30px;
             text-align: left;
         }
@@ -41,50 +40,48 @@
         }
 
         h2 {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             margin-bottom: 20px;
-            color: #666;
-            position: relative;
-            display: inline-block;
+            color: #555;
+            border-left: 4px solid #0078d4;
+            padding-left: 10px;
         }
-        /* 下划线 */
-        /* h2::after {
-            content: '';
-            display: block;
-            width: 95%;
-            position: absolute;
-            left: 0;
-            bottom: -10px;
-            height: 3px;
-            background: #000;
-            margin: 10px auto 0;
-        } */
 
         .app-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 30px;
             justify-items: center;
             padding: 0 10px;
         }
 
         .app-item {
             text-align: center;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            padding: 5px;
+            padding: 20px;
+            width: 100%;
+            max-width: 150px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .app-item:hover {
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-            background-color: #f9f9f9;
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.9);
         }
 
         .app-icon {
             width: 80px;
             height: 80px;
-            border-radius: 20px;
+            border-radius: 16px;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, #ff9ea8, #ffd1dc);
+            /* background: linear-gradient(135deg, #0078d4, #4facfe); */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -99,9 +96,17 @@
 
         .app-name {
             font-size: 1rem;
-            color: #555;
+            color: #444;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .app-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
         }
     </style>
+    <script src="../js/lib.js"></script>
 </head>
 
 <body>
@@ -110,14 +115,11 @@
             <h2>通用</h2>
             <div class="app-grid">
                 <div class="app-item">
-                    <img src="../img/logo.png" alt="应用 1 图标" class="app-icon">
-                    <span class="app-name">应用 1</span>
+                    <div class="app-icon">
+                        <img src="../img/logo.png" alt="文件代理图标">
+                    </div>
+                    <span class="app-name">文件代理</span>
                 </div>
-                <div class="app-item">
-                    <img src="../img/logo.png" alt="应用 1 图标" class="app-icon">
-                    <span class="app-name">应用 1</span>
-                </div>
-                <!-- 更多管理员安装的应用 -->
             </div>
         </section>
 
@@ -125,17 +127,37 @@
             <h2>私有</h2>
             <div class="app-grid">
                 <div class="app-item">
-                    <img src="../img/logo.png" alt="应用 1 图标" class="app-icon">
+                    <div class="app-icon">
+                        <img src="../img/logo.png" alt="应用1图标">
+                    </div>
                     <span class="app-name">应用 1</span>
                 </div>
-                <div class="app-item">
-                    <img src="../img/logo.png" alt="应用 1 图标" class="app-icon">
-                    <span class="app-name">应用 1</span>
-                </div>
-                <!-- 更多非管理员安装的应用 -->
             </div>
         </section>
     </div>
 </body>
+<script>
+    //本地检查登录状态
+    if (!checkLoginToken()) {
+        window.location.href = $HOST_HOME;
+    } else {
+        //服务器检查登录状态
+        checkLoginTokenIsTrue();
+    }
+
+    //获取软件列表
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', $HOST_SW + '/getAllAppList.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let response = JSON.parse(xhr.responseText);
+            if (response.code === 200) {
+                
+            }
+        }
+    }
+    xhr.send();
+</script>
 
 </html>

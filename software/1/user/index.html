@@ -29,6 +29,8 @@
     <div id="insert" style="display: flex;flex-wrap: wrap;">
         <!-- <div>这是第一条数据</div> -->
     </div>
+    <input type="text" id="value">
+    <button onclick="insert()">写入新数据</button>
 
 </body>
 <script>
@@ -53,5 +55,24 @@
         }
     }
     xhr.send();
+
+    function insert(){
+        const value = document.getElementById("value").value;
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "../php/insert.php", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                let res = JSON.parse(xhr.responseText);
+                if (res.code == 200) {
+                    alert(res.msg);
+                    window.location.reload();
+                } else {
+                    alert(res.msg);
+                }
+            }
+        }
+        xhr.send("data=" + value);
+    }
 </script>
 </html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>德育分详情</title>
+    <title>德育分管理</title>
     <script src="../js/chart.js"></script>
     <style>
         /* 基础样式 */
@@ -23,7 +23,7 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 20px auto;
             background-color: white;
             border-radius: 8px;
@@ -48,7 +48,7 @@
             color: #666;
         }
 
-        /* 总分与记录数 */
+        /* 总览信息 */
         .summary {
             display: flex;
             justify-content: space-around;
@@ -73,16 +73,6 @@
         .summary-value {
             font-size: 22px;
             font-weight: bold;
-        }
-
-        /* 折线图样式 */
-        .chart-container {
-            margin: 20px 0;
-        }
-
-        .chart-container canvas {
-            width: 100% !important;
-            height: auto !important;
         }
 
         /* 表格样式 */
@@ -127,35 +117,34 @@
     <div class="container">
         <!-- 顶部信息 -->
         <header class="header">
-            <h1>德育分详情</h1>
-            <p>欢迎，Yunqingli！以下是你的德育分变化记录</p>
+            <h1>德育分管理系统</h1>
+            <p>欢迎，管理员！以下是所有学生的德育分记录</p>
         </header>
 
-        <!-- 总分与记录数 -->
+        <!-- 总览信息 -->
         <section class="summary">
             <div class="summary-item">
-                <p class="summary-title">总分</p>
-                <p class="summary-value" id="total-score">--</p>
+                <p class="summary-title">总学生人数</p>
+                <p class="summary-value" id="student-count">--</p>
             </div>
             <div class="summary-item">
-                <p class="summary-title">记录数</p>
-                <p class="summary-value" id="record-count">--</p>
+                <p class="summary-title">总记录数</p>
+                <p class="summary-value" id="total-records">--</p>
             </div>
-        </section>
-
-        <!-- 折线图 -->
-        <section class="chart-container">
-            <h2>分数变化趋势图</h2>
-            <canvas id="scoreChart"></canvas>
+            <div class="summary-item">
+                <p class="summary-title">平均分</p>
+                <p class="summary-value" id="average-score">--</p>
+            </div>
         </section>
 
         <!-- 分数变化表格 -->
         <section class="score-list">
-            <h2>分数变化表</h2>
+            <h2>学生德育分记录表</h2>
             <table class="score-table" id="score-table">
                 <thead>
                     <tr>
                         <th>序号</th>
+                        <th>学生姓名</th>
                         <th>详情</th>
                         <th>分数</th>
                         <th>日期</th>
@@ -171,84 +160,46 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // 模拟单个学生的分数记录
-            const studentScores = [
-                { id: 1, detail: "班级表现优秀", score: 1, totalScore:10, date: "2025-01-01" },
-                { id: 2, detail: "协助班级活动", score: 5, date: "2025-01-02" },
-                { id: 3, detail: "作业完成度高", score: -3, date: "2025-01-03" },
-                { id: 4, detail: "文明行为", score: 8, date: "2025-01-04" },
-                { id: 4, detail: "文明行为", score: -4, date: "2025-01-05" },
-                { id: 4, detail: "文明行为", score: 3, date: "2025-01-06" },
-                { id: 4, detail: "文明行为", score: 3, date: "2025-01-07" },
-                { id: 4, detail: "文明行为", score: -2, date: "2025-01-08" },
+            // 模拟多个学生的分数记录
+            const records = [
+                { id: 1, studentName: "张三", detail: "班级表现优秀", score: 10, date: "2025-01-01" },
+                { id: 1, studentName: "张三", detail: "班级表现优秀", score: 10, date: "2025-01-01" },
+                { id: 2, studentName: "李四", detail: "协助班级活动", score: 5, date: "2025-01-02" },
+                { id: 3, studentName: "王五", detail: "作业完成度高", score: -3, date: "2025-01-03" },
+                { id: 4, studentName: "赵六", detail: "文明行为", score: 8, date: "2025-01-04" },
+                { id: 5, studentName: "钱七", detail: "迟到", score: -4, date: "2025-01-05" }
             ];
 
-            // 总分和记录数计算
-            const totalScore = studentScores.reduce((sum, record) => sum + record.score, 0) + 80;
-            document.getElementById("total-score").textContent = totalScore;
-            document.getElementById("record-count").textContent = studentScores.length;
+            // 统计数据
+            const studentCount = new Set(records.map(record => record.studentName)).size;
+            const totalRecords = records.length;
+            const totalScore = records.reduce((sum, record) => sum + record.score, 0);
+            const averageScore = (totalScore / studentCount).toFixed(2);
+
+            document.getElementById("student-count").textContent = studentCount;
+            document.getElementById("total-records").textContent = totalRecords;
+            document.getElementById("average-score").textContent = averageScore;
 
             // 渲染表格
             const tableBody = document.getElementById("score-table-body");
             const noData = document.getElementById("no-data");
 
-            if (studentScores.length > 0) {
+            if (records.length > 0) {
                 noData.style.display = "none";
-                studentScores.forEach((record, index) => {
+                records.forEach((record, index) => {
                     const row = document.createElement("tr");
                     row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${record.detail}</td>
-            <td style="color: #2d32a8; font-weight: bold;">+${record.score}</td>
-            <td>${record.date}</td>
-          `;
+                        <td>${index + 1}</td>
+                        <td>${record.studentName}</td>
+                        <td>${record.detail}</td>
+                        <td style="color: ${record.score >= 0 ? '#2d32a8' : '#d9534f'}; font-weight: bold;">${record.score > 0 ? '+' : ''}${record.score}</td>
+                        <td>${record.date}</td>
+                    `;
                     tableBody.appendChild(row);
                 });
             } else {
                 noData.style.display = "block";
             }
-
-            // 渲染折线图
-            const ctx = document.getElementById("scoreChart").getContext("2d");
-            const labels = studentScores.map(record => record.date);
-            const data = studentScores.map(record => record.score);
-
-            new Chart(ctx, {
-                type: "line",
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: "分数变化趋势",
-                        data: data,
-                        borderColor: "#2d32a8",
-                        backgroundColor: "rgba(45, 50, 168, 0.2)",
-                        tension: 0.2,
-                        fill: true,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: "top",
-                            labels: {
-                                color: "#333"
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            ticks: { color: "#333" },
-                            grid: { color: "#eee" }
-                        },
-                        y: {
-                            ticks: { color: "#333" },
-                            grid: { color: "#eee" }
-                        }
-                    }
-                }
-            });
         });
     </script>
 </body>
