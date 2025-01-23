@@ -105,252 +105,154 @@
                 grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             }
         }
+
+        .appINFO {
+            display: none;
+            position: absolute;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            width: 0vw;
+            height: 0vh;
+            margin: 0 auto;
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: width 0.1s, height 0.2s;
+        }
+
+        .appINFO iframe {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .black {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
     </style>
+    <script src="../js/lib.js"></script>
 </head>
 
 <body>
     <div class="container">
         <section class="section">
             <h2>通用</h2>
-            <div class="app-grid">
-                <div class="app-item">
+            <div class="app-grid" id="public">
+                <!-- <div class="app-item">
                     <div class="app-icon">
                         <img src="../img/logo.png" alt="文件代理图标">
                     </div>
                     <span class="app-name">文件代理</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="https://q4.qlogo.cn/g?b=qq&nk=2573176998&s=140" alt="应用2图标">
-                    </div>
-                    <span class="app-name">应用 2</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用3图标">
-                    </div>
-                    <span class="app-name">应用 3</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用4图标">
-                    </div>
-                    <span class="app-name">应用 4</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="文件代理图标">
-                    </div>
-                    <span class="app-name">文件代理</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="https://q4.qlogo.cn/g?b=qq&nk=2573176998&s=140" alt="应用2图标">
-                    </div>
-                    <span class="app-name">应用 2</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用3图标">
-                    </div>
-                    <span class="app-name">应用 3</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用4图标">
-                    </div>
-                    <span class="app-name">应用 4</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="文件代理图标">
-                    </div>
-                    <span class="app-name">文件代理</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="https://q4.qlogo.cn/g?b=qq&nk=2573176998&s=140" alt="应用2图标">
-                    </div>
-                    <span class="app-name">应用 2</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用3图标">
-                    </div>
-                    <span class="app-name">应用 3</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用4图标">
-                    </div>
-                    <span class="app-name">应用 4</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="文件代理图标">
-                    </div>
-                    <span class="app-name">文件代理</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="https://q4.qlogo.cn/g?b=qq&nk=2573176998&s=140" alt="应用2图标">
-                    </div>
-                    <span class="app-name">应用 2</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用3图标">
-                    </div>
-                    <span class="app-name">应用 3</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用4图标">
-                    </div>
-                    <span class="app-name">应用 4</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="文件代理图标">
-                    </div>
-                    <span class="app-name">文件代理</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="https://q4.qlogo.cn/g?b=qq&nk=2573176998&s=140" alt="应用2图标">
-                    </div>
-                    <span class="app-name">应用 2</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用3图标">
-                    </div>
-                    <span class="app-name">应用 3</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用4图标">
-                    </div>
-                    <span class="app-name">应用 4</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="文件代理图标">
-                    </div>
-                    <span class="app-name">文件代理</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="https://q4.qlogo.cn/g?b=qq&nk=2573176998&s=140" alt="应用2图标">
-                    </div>
-                    <span class="app-name">应用 2</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用3图标">
-                    </div>
-                    <span class="app-name">应用 3</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用4图标">
-                    </div>
-                    <span class="app-name">应用 4</span>
-                </div>
-                
+                </div> -->
             </div>
         </section>
 
         <section class="section">
             <h2>私有</h2>
-            <div class="app-grid">
-                <div class="app-item">
+            <div class="app-grid" id="private">
+                <!-- <div class="app-item">
                     <div class="app-icon">
                         <img src="../img/logo.png" alt="应用1图标">
                     </div>
                     <span class="app-name">应用 1</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用2图标">
-                    </div>
-                    <span class="app-name">应用 2</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="文件代理图标">
-                    </div>
-                    <span class="app-name">文件代理</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="https://q4.qlogo.cn/g?b=qq&nk=2573176998&s=140" alt="应用2图标">
-                    </div>
-                    <span class="app-name">应用 2</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用3图标">
-                    </div>
-                    <span class="app-name">应用 3</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用4图标">
-                    </div>
-                    <span class="app-name">应用 4</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="文件代理图标">
-                    </div>
-                    <span class="app-name">文件代理</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="https://q4.qlogo.cn/g?b=qq&nk=2573176998&s=140" alt="应用2图标">
-                    </div>
-                    <span class="app-name">应用 2</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用3图标">
-                    </div>
-                    <span class="app-name">应用 3</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用4图标">
-                    </div>
-                    <span class="app-name">应用 4</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="文件代理图标">
-                    </div>
-                    <span class="app-name">文件代理</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="https://q4.qlogo.cn/g?b=qq&nk=2573176998&s=140" alt="应用2图标">
-                    </div>
-                    <span class="app-name">应用 2</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用3图标">
-                    </div>
-                    <span class="app-name">应用 3</span>
-                </div>
-                <div class="app-item">
-                    <div class="app-icon">
-                        <img src="../img/logo.png" alt="应用4图标">
-                    </div>
-                    <span class="app-name">应用 4</span>
-                </div>
+                </div> -->
             </div>
         </section>
     </div>
+    <div class="black"></div>
+    <div class="appINFO">
+        <button onclick="closeAppINFO()">关闭</button>
+        <button onclick="window.open(document.querySelector('iframe').src, '_blank')">新标签页打开app</button>
+        <iframe src="http://43.139.71.160:8080/website/" frameborder="0"></iframe>
+
+    </div>
 </body>
+<script>
+    //本地检查登录状态
+    if (!checkLoginToken()) {
+        window.location.href = $HOST_HOME;
+    } else {
+        //服务器检查登录状态
+        checkLoginTokenIsTrue();
+    }
+
+    //获取软件列表
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', $HOST_SW + '/getAllAppList.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let response = JSON.parse(xhr.responseText);
+            if (response.code === 200) {
+                let data = response.data;
+                for (let i = 0; i < data.length; i++) {
+                    let appItem = document.createElement('div');
+                    appItem.className = 'app-item';
+                    appItem.onclick = function () {
+                        showAppInfo(data[i].id);
+                    };
+                    appItem.innerHTML = `
+                        <div class="app-icon">
+                            <img src="../../software/${data[i].id}/config/icon.png" alt="${data[i].name}图标">
+                        </div>
+                        <span class="app-name">${data[i].name}</span>
+                    `;
+
+                    document.querySelector('#' + data[i].type).appendChild(appItem);
+                }
+            }
+        }
+    }
+    let token = getToken();
+    token = encodeURIComponent(token);
+    xhr.send("token=" + token + "&type=admin");
+
+
+    function showAppInfo(id) {
+        console.log("点击了软件：" + id);
+        document.querySelector('.black').style.display = 'flex';
+        document.querySelector('.black').style.opacity = '1';
+        const appINFO = document.querySelector('.appINFO');
+        appINFO.style.display = 'block';
+        var num = 0;
+        let a = setInterval(() => {
+            num = num + 3;
+            appINFO.style.width = num + 'vw';
+            appINFO.style.height = num + 'vh';
+            if (num >= 70) {
+                clearInterval(a);
+            }
+        }, 15);
+    }
+
+    function closeAppINFO() {
+        const appINFO = document.querySelector('.appINFO');
+        var num = 70;
+        let a = setInterval(() => {
+            num = num - 3;
+            appINFO.style.width = num + 'vw';
+            appINFO.style.height = num + 'vh';
+            if (num <= 0) {
+                clearInterval(a);
+
+                appINFO.style.display = 'none';
+                document.querySelector('.black').style.display = 'none';
+                document.querySelector('.black').style.opacity = '0';
+            }
+        }, 15);
+
+    }
+</script>
 
 </html>

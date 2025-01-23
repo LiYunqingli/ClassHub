@@ -5,9 +5,12 @@
 
 // ----------------------------------
 
-/* 主机地址 */
-const $HOST = "http://127.0.0.1/php";
-const $HOST_HOME = "http://127.0.0.1/login.html"//登录页
+/* 主机地址 */const $MAIN = "http://127.0.0.1";
+
+const $HOST = $MAIN + "/php";
+const $HOST_HOME = $MAIN + "/login.html"//登录页
+const $HOST_SW = $MAIN + "/php/software";//软件相关api
+
 /* 请注意开发的时候修改为开发地址，部署服务使应当修改为服务器地址 */
 
 // ----------------------------------
